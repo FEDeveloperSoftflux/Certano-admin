@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gradient-primary: linear-gradient(135deg, #CBA7FF 0%, #FFC7AA 100%);
+    --shadow-color-primary: rgba(145, 72, 217, 0.4);
+    --shadow-color-secondary: rgba(59, 130, 246, 0.4);
+    --shadow-color-white: rgba(255, 255, 255, 0.25);
+    --hover-scale: 1.04;
+    --hover-y-offset: -2px;
+    --transition-duration: 0.3s;
+    --transition-timing: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  body {
+    @apply bg-primary-bg text-text-body font-lato;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-schibsted text-text-heading;
+  }
+}
+
+@layer components {
+  .btn-hover {
+    @apply relative overflow-hidden transition-hover duration-300 ease-custom;
+    transform: translateY(0);
+  }
+
+  .btn-hover:hover {
+    transform: scale(var(--hover-scale)) translateY(var(--hover-y-offset));
+    @apply shadow-primary;
+  }
+
+  .btn-hover:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary {
+    @apply bg-gradient-primary text-white px-4 py-2 rounded-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-cards-bg text-white px-4 py-2 rounded-lg;
+  }
+
+  .btn-white {
+    @apply bg-white text-primary-bg px-4 py-2 rounded-lg;
+  }
+
+  .card {
+    @apply bg-cards-bg rounded-lg p-6 animate-fadeIn;
+  }
+
+  .card-alt {
+    @apply bg-cards-alt-bg rounded-lg p-6 animate-fadeIn;
+  }
+
+  .sidebar-gradient-active {
+    @apply bg-gradient-primary bg-[length:200%_200%] animate-gradientShift;
+  }
+
+  .sidebar-item-hover:hover {
+    @apply bg-white/5 transition-all duration-300 ease-in-out;
+  }
+
+  /* Replaced with inline styles in the Sidebar component */
+
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}

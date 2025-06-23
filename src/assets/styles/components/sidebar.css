@@ -1,0 +1,54 @@
+/* Sidebar component styles */
+
+.sidebar {
+  @apply bg-panels-bg w-64 h-screen fixed left-0 top-0 flex flex-col z-10;
+}
+
+.sidebar-header {
+  @apply p-6 flex items-center mb-8;
+  background-image: url('/Dashboard-assets/nav-bg.png');
+  background-size: cover;
+  background-position: center;
+  height: 80px;
+}
+
+.sidebar-nav {
+  @apply flex-1 px-4;
+}
+
+.sidebar-nav-item {
+  @apply flex items-center px-4 py-3 rounded-lg transition-all;
+}
+
+.sidebar-nav-item:hover {
+  @apply bg-white/5;
+}
+
+.sidebar-nav-item.active {
+  @apply bg-white/10 border-l-4 border-gradient-start text-white;
+  position: relative;
+}
+
+.sidebar-nav-item.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(93.17deg, rgba(145, 72, 217, 0.1) 0%, rgba(255, 128, 103, 0.1) 100%);
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+.sidebar-nav-icon {
+  @apply w-5 h-5 mr-3;
+}
+
+.sidebar-help-card {
+  @apply p-6 mx-4 mb-6 rounded-lg;
+  background-image: linear-gradient(93.17deg, rgba(145, 72, 217, 0.3) 0%, rgba(255, 128, 103, 0.3) 100%), url('/Dashboard-assets/card-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+}
