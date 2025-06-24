@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Card from "../common/Card";
 import { formatDate } from "@/utils/helpers/formatters";
-
+import viewIcon from "@/assets/icons/view.svg";
 const mockClients = [
   {
     id: "sj1",
@@ -75,11 +75,7 @@ const RecentClients = () => {
           onClick={() => setViewAll(!viewAll)}
           className="flex items-center text-sm text-text-body hover:text-white transition-all"
         >
-          <img
-            src="/Dashboard-assets/view.svg"
-            alt="View all"
-            className="w-4 h-4 mr-1"
-          />
+          <img src={viewIcon} alt="View all" className="w-4 h-4 mr-1" />
           <span>View All</span>
         </button>
       </div>

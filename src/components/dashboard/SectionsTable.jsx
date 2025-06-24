@@ -2,6 +2,7 @@ import { useState } from "react";
 import Card from "../common/Card";
 import updateIcon from "../../assets/icons/update.svg";
 import SectionsView from "./SectionsView";
+import viewIcon from "@/assets/icons/view.svg";
 
 const mockSections = [
   {
@@ -56,14 +57,12 @@ const SectionsTable = () => {
         </h3>
         <button
           onClick={() => setViewAll(!viewAll)}
-          className={`flex items-center text-sm ${viewAll ? 'text-white' : 'text-text-body hover:text-white'} transition-all`}
+          className={`flex items-center text-sm ${
+            viewAll ? "text-white" : "text-text-body hover:text-white"
+          } transition-all`}
         >
-          <img
-            src="/Dashboard-assets/view.svg"
-            alt="View all"
-            className="w-4 h-4 mr-1"
-          />
-          <span>{viewAll ? 'View Less' : 'View All'}</span>
+          <img src={viewIcon} alt="View all" className="w-4 h-4 mr-1" />
+          <span>{viewAll ? "View Less" : "View All"}</span>
         </button>
       </div>
 

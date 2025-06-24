@@ -1,3 +1,146 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+}
+
+@keyframes draw {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+  100% {
+    stroke-dasharray: 100 0;
+  }
+}
+
+.animate-draw {
+  stroke-dasharray: 0 100;
+  animation: draw 0.8s ease forwards 0.2s;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75%, 100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Enhanced glassmorphic effect */
+.bg-glass {
+  background: rgba(26, 26, 26, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced gradient */
+.bg-gradient-enhanced {
+  background: linear-gradient(135deg, #9d3fff 0%, #ffd93f 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced modal animations */
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.modal-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Enhanced success animation */
+@keyframes successCheck {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.success-check {
+  stroke-dasharray: 100;
+  animation: successCheck 0.8s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+/* Button hover effects */
+.btn-gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: transform 0.75s ease;
+}
+
+.btn-gradient:hover::before {
+  transform: skewX(-25deg) translateX(100%);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -41,7 +184,7 @@
   }
 
   .btn-primary {
-    @apply bg-gradient-primary text-white px-4 py-2 rounded-lg;
+    @apply bg-gradient-primary text-black px-4 py-2 rounded-lg;
   }
 
   .btn-secondary {

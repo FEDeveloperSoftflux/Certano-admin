@@ -11,9 +11,7 @@ const Sidebar = () => {
           height: "90px",
         }}
       >
-        <h1 className="text-2xl font-schibsted font-bold text-white">
-          Certano AI
-        </h1>
+        <h1 className="text-2xl font-schibsted  text-white">Certano AI</h1>
       </div>
 
       <nav className="flex-1 px-4 py-4">
