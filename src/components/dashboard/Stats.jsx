@@ -124,7 +124,9 @@ const StatCard = ({ stat, index }) => {
             {isFirstCard ? (
               <span className="text-white">{value}</span>
             ) : (
-              <span className="text-primary-200">{value}</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800">
+                {value}
+              </span>
             )}
           </div>
           <p
