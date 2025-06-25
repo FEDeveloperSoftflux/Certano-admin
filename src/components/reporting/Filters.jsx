@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@/components/common/Button';
-import calendarIcon from '@/assets/icons/calendar.svg';
+import calendarIcon from '@/assets/icons/calender.svg';
 import downloadIcon from '@/assets/icons/download.svg';
 
 // Sample client data - replace with actual data in production

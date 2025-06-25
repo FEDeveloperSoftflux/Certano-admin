@@ -3,7 +3,7 @@ import MainLayout from "./components/layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import UserManagement from "./pages/UserManagement/UserManagement";
 import Sections from "./pages/SectionsManagement/SectionsManagement";
-import Reporting from "./pages/Reporting";
+import Reporting from "./pages/ReportingPage";
 import Settings from "./pages/Settings";
 import WhatsNew from "./pages/WhatsNew";
 
