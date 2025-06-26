@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
-import UserManagement from "./pages/UserManagement/UserManagement";
-import Sections from "./pages/SectionsManagement/SectionsManagement";
+import UserManagement from "./pages/UserManagement";
+import Sections from "./pages/SectionsManagement";
 import Reporting from "./pages/ReportingPage";
 import Settings from "./pages/Settings";
 import WhatsNew from "./pages/WhatsNew";

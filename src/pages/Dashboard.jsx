@@ -24,7 +24,7 @@ const Dashboard = () => {
           </Button>
           <Button
             variant="primary"
-            className="px-5 py-2 text-black font-semibold"
+            className="px-5 py-2 text-black font-semibold bg-gradient-primary"
           >
             Yearly
           </Button>

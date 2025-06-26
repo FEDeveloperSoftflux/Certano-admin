@@ -56,7 +56,7 @@ const CreatePostModal = ({ isOpen, onClose, onSubmit }) => (
       <SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
       <GradientButton 
         onClick={onSubmit} 
-        className="px-6 py-2.5 text-black font-medium bg-gradient-to-r from-[#7c11ff] via-white to-[#FF8067] shadow-lg"
+        className="px-6 py-2.5 text-black font-medium bg-gradient-primary shadow-lg"
       >
         Create Post
       </GradientButton>

@@ -5,11 +5,14 @@ import AnnounceIcon from "@/assets/icons/announce.svg";
 import AddIcon from "@/assets/icons/add.svg";
 import AnnouncementCard from "@/components/whatsNew/AnnouncementCard";
 import CreatePostModal from "@/components/whatsNew/CreatePostModal";
+import EditUpdateModal from "@/components/common/EditUpdateModal";
 
 const WhatsNew = () => {
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingAnnouncement, setEditingAnnouncement] = useState(null);
+  const [announcements, setAnnouncements] = useState([
 
-  const announcements = [
     {
       id: 1,
       title: "New EPC Standards from 2025",
@@ -40,7 +43,22 @@ const WhatsNew = () => {
       description: "All new tenancies will soon require a minimum EPC rating of C. Certano will notify you if your tenancy is at risk of failing short.",
       date: "8 Jan 2025"
     }
-  ];
+  ]);
+
+  const handleEdit = (announcement) => {
+    setEditingAnnouncement(announcement);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = (updatedData) => {
+    setAnnouncements(announcements.map(ann => 
+      ann.id === editingAnnouncement.id 
+        ? { ...ann, ...updatedData }
+        : ann
+    ));
+    setIsEditModalOpen(false);
+    setEditingAnnouncement(null);
+  };
 
   return (
     <div className="animate-fadeIn">
@@ -55,7 +73,7 @@ const WhatsNew = () => {
         </div>
         <Button
           variant="primary"
-          className="px-4 py-2 bg-gradient-to-r from-[#7c11ff] via-white to-[#FF8067] shadow-sm transform hover:scale-105 transition-all"
+          className="px-4 py-2 bg-gradient-primary shadow-sm transform hover:scale-105 transition-all"
           onClick={() => setIsCreatePostModalOpen(true)}
         >
           <span className="flex items-center text-black font-semibold">
@@ -74,6 +92,8 @@ const WhatsNew = () => {
               title={announcement.title}
               description={announcement.description}
               date={announcement.date}
+              isAdmin={true}
+              onEdit={() => handleEdit(announcement)}
             />
           ))}
         </div>
@@ -86,6 +106,16 @@ const WhatsNew = () => {
           // Handle post creation
           setIsCreatePostModalOpen(false);
         }}
+      />
+      
+      <EditUpdateModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setEditingAnnouncement(null);
+        }}
+        onSubmit={handleEditSubmit}
+        initialData={editingAnnouncement}
       />
     </div>
   );

@@ -4,7 +4,7 @@ import "@/assets/styles/components/card.css";
 import cardBg from "@/assets/images/patterns/card-bg.png";
 
 // Import icons
-import statsIcon from "@/assets/icons/stats.svg";
+
 import sectionIcon from "@/assets/icons/sectionCount.svg";
 import usersIcon from "@/assets/icons/user.svg";
 import earningsIcon from "@/assets/icons/earning.svg";
@@ -121,13 +121,7 @@ const StatCard = ({ stat, index }) => {
             {title}
           </h3>
           <div className="font-schibsted text-4xl font-bold mb-2">
-            {isFirstCard ? (
-              <span className="text-white">{value}</span>
-            ) : (
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800">
-                {value}
-              </span>
-            )}
+            <span className="text-white">{value}</span>
           </div>
           <p
             className={`text-sm ${
@@ -141,7 +135,7 @@ const StatCard = ({ stat, index }) => {
         <div
           className={`rounded-full transition-all duration-300 flex items-center justify-center ${
             isFirstCard
-              ? "bg-gradient-to-br from-white/10 to-white/20 backdrop-blur-sm"
+              ? "bg-gradient-to-br from-white/10 to-white/30 backdrop-blur-sm"
               : "bg-gradient-to-br from-primary-600 to-primary-800"
           }`}
           style={{
@@ -153,9 +147,7 @@ const StatCard = ({ stat, index }) => {
           <img
             src={icon}
             alt={title}
-            className={`w-6 h-6 ${
-              isFirstCard ? "brightness-200" : "brightness-200 invert"
-            }`}
+            className="w-6 h-6 filter brightness-0 invert"
           />
         </div>
       </div>

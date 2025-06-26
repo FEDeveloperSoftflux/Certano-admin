@@ -53,7 +53,7 @@ export const SuccessModal = ({ isOpen, message }) => {
 export const GradientButton = ({ onClick, children, className = '' }) => (
   <button
     onClick={onClick}
-    className={`px-4 py-2 rounded-lg bg-gradient-enhanced btn-gradient text-white font-medium hover:opacity-90 transition-all duration-300 ${className}`}
+    className={`px-4 py-2 rounded-lg bg-gradient-primary text-black font-medium hover:opacity-90 transition-all duration-300 ${className}`}
   >
     {children}
   </button>

@@ -35,12 +35,12 @@ const Sidebar = () => {
                       src={item.icon}
                       alt={`${item.title} icon`}
                       className={`w-5 h-5 mr-3.5 relative ${
-                        isActive ? "z-10 brightness-125" : "opacity-75"
+                        isActive ? "z-10 brightness-125 invert" : "opacity-75"
                       }`}
                     />
                     <span
                       className={`font-schibsted relative text-[15px] ${
-                        isActive ? "z-10 text-white" : ""
+                        isActive ? "z-10 text-white invert" : ""
                       }`}
                     >
                       {item.title}

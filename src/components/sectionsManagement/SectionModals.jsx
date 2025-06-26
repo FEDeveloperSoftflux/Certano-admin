@@ -255,6 +255,8 @@ export const AddSectionModal = ({ isOpen, onClose, onSubmit }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   
   // Track unsaved changes
   useEffect(() => {
@@ -307,8 +309,31 @@ You can modify this content after creation or regenerate with a different prompt
   };
 
   // Handle form submission
-  const handleSubmit = () => {
-    onSubmit(sectionData);
+  const handleSubmit = async () => {
+    setIsCreating(true);
+    try {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Call the onSubmit function
+      await onSubmit(sectionData);
+      
+      // Show success modal
+      setShowSuccessModal(true);
+      
+      // Reset form data after successful submission
+      setSectionData({
+        title: '',
+        description: '',
+        status: 'active',
+        aiPrompt: '',
+      });
+      setHasUnsavedChanges(false);
+    } catch (error) {
+      console.error('Error creating section:', error);
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   // Handle modal close with unsaved changes
@@ -331,6 +356,49 @@ You can modify this content after creation or regenerate with a different prompt
   const cancelConfirmation = () => {
     setShowConfirmDialog(false);
   };
+
+  // Handle success modal close
+  const handleSuccessClose = () => {
+    setShowSuccessModal(false);
+    onClose(); // Close the main modal as well
+  };
+
+  // Success Modal Component
+  const SuccessModal = () => (
+    <Modal
+      isOpen={showSuccessModal}
+      onClose={handleSuccessClose}
+      title=""
+    >
+      <div className="text-center py-6">
+        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+          <svg
+            className="h-6 w-6 text-green-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        </div>
+        <h3 className="text-lg font-medium text-white mb-2">Success!</h3>
+        <p className="text-gray-400 mb-6">
+          Section has been created successfully.
+        </p>
+        <GradientButton
+          onClick={handleSuccessClose}
+          className="px-6 py-2 bg-gradient-primary text-black"
+        >
+          Continue
+        </GradientButton>
+      </div>
+    </Modal>
+  );
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} width="600px">
@@ -393,7 +461,7 @@ You can modify this content after creation or regenerate with a different prompt
           <div className="flex justify-end mb-4">
             <GradientButton 
               onClick={generateAIPreview}
-              className={isGenerating ? 'opacity-70 cursor-not-allowed' : ''}
+              className={`bg-gradient-primary text-black ${isGenerating ? 'opacity-70 cursor-not-allowed' : ''}`}
               disabled={isGenerating || !sectionData.aiPrompt}
             >
               {isGenerating ? 'Generating...' : 'Generate AI Preview'}
@@ -414,12 +482,27 @@ You can modify this content after creation or regenerate with a different prompt
           <SecondaryButton onClick={handleClose}>Cancel</SecondaryButton>
           <GradientButton 
             onClick={handleSubmit}
-            disabled={!sectionData.title}
+            disabled={!sectionData.title || isCreating}
+            className="bg-gradient-primary text-black"
           >
-            Create Section
+            {isCreating ? 'Creating...' : 'Create Section'}
           </GradientButton>
         </div>
       </div>
+      
+      {/* Confirmation dialog for unsaved changes */}
+      <Modal isOpen={showConfirmDialog} onClose={cancelConfirmation}>
+        <h2 className="text-2xl font-bold text-white mb-2">Unsaved Changes</h2>
+        <p className="text-orange-400 mb-1">You have unsaved changes.</p>
+        <p className="text-gray-400 text-sm mb-6">Do you want to discard your changes?</p>
+        <div className="flex justify-end space-x-3">
+          <SecondaryButton onClick={cancelConfirmation}>Cancel</SecondaryButton>
+          <GradientButton onClick={confirmDiscard} className="bg-gradient-primary text-black">Discard Changes</GradientButton>
+        </div>
+      </Modal>
+      
+      {/* Success Modal */}
+      <SuccessModal />
     </Modal>
   );
 };
@@ -593,6 +676,7 @@ export const AIPreviewModal = ({
           <GradientButton 
             onClick={handleApply}
             disabled={isLoading || applyLoading || !content}
+            className="bg-gradient-primary text-black"
           >
             {applyLoading ? 'Applying...' : 'Apply Preview'}
           </GradientButton>

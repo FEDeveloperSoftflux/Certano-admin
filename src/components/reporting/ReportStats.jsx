@@ -1,25 +1,46 @@
-import React from 'react';
-import Card from '@/components/common/Card';
-import usersIcon from '@/assets/icons/user.svg';
-import earningsIcon from '@/assets/icons/earning.svg';
-import statsIcon from '@/assets/icons/stats.svg';
+import React from "react";
+import Card from "@/components/common/Card";
+import usersIcon from "@/assets/icons/user.svg";
+import earningsIcon from "@/assets/icons/earning.svg";
+import statsIcon from "@/assets/icons/stats.svg";
 import { formatPercentage } from "@/utils/helpers/formatters";
+import cardBg from "@/assets/images/patterns/card-bg.png";
 
 // Custom stat card component that matches the design
-const CustomStatCard = ({ title, value, description, icon, change, changeDirection, isFirstCard }) => {
+const CustomStatCard = ({
+  title,
+  value,
+  description,
+  icon,
+  change,
+  changeDirection,
+  isFirstCard,
+}) => {
   return (
-    <Card className={`w-full relative overflow-hidden transition-all duration-300 rounded-xl ${isFirstCard ? 'bg-gradient-to-r from-purple-600 to-purple-700' : ''}`}>
-      <div className="p-6">
+    <Card
+      className={`w-full relative overflow-hidden transition-all duration-300 rounded-xl`}
+      style={
+        isFirstCard
+          ? {
+              backgroundImage: `url(${cardBg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+          : {}
+      }
+    >
+      {/* Remove the overlay div for the first card */}
+      <div className="p-6 relative z-10">
         {/* Percentage change pill if available */}
         {change !== undefined && (
           <div className="absolute bottom-4 right-4">
             <div
               className={`rounded-full px-3 py-1 text-xs font-medium flex items-center ${
                 isFirstCard
-                  ? 'bg-white/20 backdrop-blur-sm text-white'
+                  ? "bg-white/20 backdrop-blur-sm text-white"
                   : changeDirection === "up"
-                  ? 'bg-green-500/10 text-green-500'
-                  : 'bg-red-500/10 text-red-500'
+                  ? "bg-green-500/10 text-green-500"
+                  : "bg-red-500/10 text-red-500"
               }`}
             >
               {changeDirection === "up" ? (
@@ -66,23 +87,17 @@ const CustomStatCard = ({ title, value, description, icon, change, changeDirecti
           <div>
             <h3
               className={`text-sm font-medium mb-2 ${
-                isFirstCard ? 'text-white/80' : 'text-text-body'
+                isFirstCard ? "text-white/80" : "text-text-body"
               }`}
             >
               {title}
             </h3>
             <div className="font-schibsted text-4xl font-bold mb-2">
-              {isFirstCard ? (
-                <span className="text-white">{value}</span>
-              ) : (
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800">
-                  {value}
-                </span>
-              )}
+              <span className="text-white">{value}</span>
             </div>
             <p
               className={`text-sm ${
-                isFirstCard ? 'text-white/70' : 'text-text-body'
+                isFirstCard ? "text-white/70" : "text-text-body"
               }`}
             >
               {description}
@@ -92,8 +107,8 @@ const CustomStatCard = ({ title, value, description, icon, change, changeDirecti
           <div
             className={`rounded-full transition-all duration-300 flex items-center justify-center ${
               isFirstCard
-                ? 'bg-gradient-to-br from-white/10 to-white/20 backdrop-blur-sm'
-                : 'bg-gradient-to-br from-primary-600 to-primary-800'
+                ? "bg-gradient-to-br from-white/10 to-white/20 backdrop-blur-sm"
+                : "bg-gradient-to-br from-primary-600 to-primary-800"
             }`}
             style={{
               width: "48px",
@@ -103,9 +118,7 @@ const CustomStatCard = ({ title, value, description, icon, change, changeDirecti
             <img
               src={icon}
               alt={title}
-              className={`w-6 h-6 ${
-                isFirstCard ? 'brightness-200' : 'brightness-200 invert'
-              }`}
+              className="w-6 h-6 filter brightness-0 invert"
             />
           </div>
         </div>
@@ -121,7 +134,7 @@ const ReportStats = () => {
       value: "$0",
       description: "Previous month earnings",
       icon: usersIcon,
-      isFirstCard: true
+      isFirstCard: true,
     },
     {
       title: "Total Earning",
@@ -130,7 +143,7 @@ const ReportStats = () => {
       icon: earningsIcon,
       change: 12.5,
       changeDirection: "up",
-      isFirstCard: false
+      isFirstCard: false,
     },
     {
       title: "Avg Transaction",
@@ -139,8 +152,8 @@ const ReportStats = () => {
       icon: statsIcon,
       change: 12.5,
       changeDirection: "up",
-      isFirstCard: false
-    }
+      isFirstCard: false,
+    },
   ];
 
   return (
@@ -150,6 +163,6 @@ const ReportStats = () => {
       ))}
     </div>
   );
-}
+};
 
 export default ReportStats;

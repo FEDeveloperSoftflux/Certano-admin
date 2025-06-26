@@ -52,7 +52,7 @@ export const SuccessModal = ({ isOpen, message }) => {
 export const GradientButton = ({ onClick, children, className = '' }) => (
   <button
     onClick={onClick}
-    className={`px-4 py-2 rounded-lg bg-gradient-to-r from-[#9d3fff] to-[#ffd93f] text-white font-medium hover:opacity-90 transition-opacity ${className}`}
+    className={`px-4 py-2 rounded-lg bg-gradient-primary text-black font-medium hover:opacity-90 transition-opacity ${className}`}
   >
     {children}
   </button>
@@ -67,3 +67,6 @@ export const SecondaryButton = ({ onClick, children, className = '' }) => (
     {children}
   </button>
 );
+
+// Default export
+export default Modal;
