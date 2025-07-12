@@ -23,36 +23,6 @@ const ExportPDFModal = ({ isOpen, onClose }) => {
     { date: "3/8/2024", client: "TechCorp Inc", plan: "Premium", description: "Website maintenance", amount: "$2,500" },
   ];
 
-  // Plan badge with appropriate styling
-  const PlanBadge = ({ plan }) => {
-    let bgColor = 'bg-gray-700';
-    let textColor = 'text-gray-300';
-    
-    switch (plan.toLowerCase()) {
-      case 'premium':
-        bgColor = 'bg-red-900/30';
-        textColor = 'text-red-400';
-        break;
-      case 'basic':
-        bgColor = 'bg-purple-900/30';
-        textColor = 'text-purple-400';
-        break;
-      case 'enterprise':
-        bgColor = 'bg-gray-700/50';
-        textColor = 'text-gray-300';
-        break;
-      case 'pro':
-        bgColor = 'bg-green-900/30';
-        textColor = 'text-green-400';
-        break;
-    }
-    
-    return (
-      <span className={`px-3 py-1 rounded-full text-xs ${bgColor} ${textColor}`}>
-        {plan}
-      </span>
-    );
-  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} width="800px">
@@ -86,7 +56,6 @@ const ExportPDFModal = ({ isOpen, onClose }) => {
               <tr className="border-b border-[#333]">
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Date</th>
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Client</th>
-                <th className="px-4 py-3 text-left text-sm text-gray-400">Plan</th>
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Description</th>
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Amount</th>
               </tr>
@@ -96,9 +65,6 @@ const ExportPDFModal = ({ isOpen, onClose }) => {
                 <tr key={index} className="border-b border-[#333]">
                   <td className="px-4 py-4 text-white">{item.date}</td>
                   <td className="px-4 py-4 text-white">{item.client}</td>
-                  <td className="px-4 py-4">
-                    <PlanBadge plan={item.plan} />
-                  </td>
                   <td className="px-4 py-4 text-white">{item.description}</td>
                   <td className="px-4 py-4 text-white">{item.amount}</td>
                 </tr>

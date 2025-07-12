@@ -1,37 +1,91 @@
-import React from "react";
-import Card from "@/components/common/Card";
+import { useState, useEffect, useRef } from "react";
+import { formatPercentage } from "@/utils/helpers/formatters";
+import "@/assets/styles/components/card.css";
+import cardBg from "@/assets/images/patterns/card-bg.png";
 import usersIcon from "@/assets/icons/user.svg";
 import earningsIcon from "@/assets/icons/earning.svg";
 import statsIcon from "@/assets/icons/stats.svg";
-import { formatPercentage } from "@/utils/helpers/formatters";
-import cardBg from "@/assets/images/patterns/card-bg.png";
 
-// Custom stat card component that matches the design
-const CustomStatCard = ({
-  title,
-  value,
-  description,
-  icon,
-  change,
-  changeDirection,
-  isFirstCard,
-}) => {
-  return (
-    <Card
-      className={`w-full relative overflow-hidden transition-all duration-300 rounded-xl`}
-      style={
-        isFirstCard
-          ? {
-              backgroundImage: `url(${cardBg})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }
-          : {}
+const ReportStats = () => {
+  const statsData = [
+    {
+      title: "Last Month",
+      value: "$0",
+      description: "Previous month earnings",
+      icon: usersIcon,
+      change: 12.5,
+      changeDirection: "up",
+      isFirstCard: true,
+    },
+    {
+      title: "Total Earning",
+      value: "$45,670",
+      description: "Lifetime earnings",
+      icon: earningsIcon,
+      change: 12.5,
+      changeDirection: "up",
+    },
+    {
+      title: "Avg Transaction",
+      value: "$2,670",
+      description: "Per transaction",
+      icon: statsIcon,
+      change: 12.5,
+      changeDirection: "up",
+    },
+  ];
+  const StatCard = ({ stat, index }) => {
+    const { title, value, description, icon, change, changeDirection } = stat;
+    const cardRef = useRef(null);
+    const [isHovered, setIsHovered] = useState(false);
+
+    useEffect(() => {
+      const cardElement = cardRef.current;
+      if (cardElement) {
+        // Add staggered animation delay based on index
+        cardElement.style.animationDelay = `${index * 0.1}s`;
       }
-    >
-      {/* Remove the overlay div for the first card */}
-      <div className="p-6 relative z-10">
-        {/* Percentage change pill if available */}
+    }, [index]);
+
+    // Handle hover effects with React instead of DOM manipulation
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+    };
+
+    // Determine if this is the first card (for special styling)
+    const isFirstCard = index === 0;
+
+    return (
+      <div
+        ref={cardRef}
+        className={`card animate-fadeIn w-full relative overflow-hidden transition-all duration-300 rounded-xl ${
+          isFirstCard ? "" : "bg-cards-bg"
+        }`}
+        style={{
+          transform: isHovered ? "translateY(-5px)" : "translateY(0)",
+          boxShadow: isHovered
+            ? "0 10px 25px rgba(0, 0, 0, 0.2)"
+            : "0 4px 6px rgba(0, 0, 0, 0.1)",
+          padding: "1.5rem",
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Background gradient and pattern for the first card */}
+        {isFirstCard && (
+          <div className="absolute inset-0 -z-10">
+            <div
+              style={{ backgroundImage: `url(${cardBg})` }}
+              className="w-full h-full bg-cover bg-center rounded-xl"
+            ></div>
+          </div>
+        )}
+
+        {/* Percentage change pill at bottom right */}
         {change !== undefined && (
           <div className="absolute bottom-4 right-4">
             <div
@@ -82,7 +136,6 @@ const CustomStatCard = ({
             </div>
           </div>
         )}
-
         <div className="flex justify-between items-start">
           <div>
             <h3
@@ -107,10 +160,11 @@ const CustomStatCard = ({
           <div
             className={`rounded-full transition-all duration-300 flex items-center justify-center ${
               isFirstCard
-                ? "bg-gradient-to-br from-white/10 to-white/20 backdrop-blur-sm"
+                ? "bg-gradient-to-br from-white/10 to-white/30 backdrop-blur-sm"
                 : "bg-gradient-to-br from-primary-600 to-primary-800"
             }`}
             style={{
+              transform: isHovered ? "scale(1.05)" : "scale(1)",
               width: "48px",
               height: "48px",
             }}
@@ -122,44 +176,22 @@ const CustomStatCard = ({
             />
           </div>
         </div>
-      </div>
-    </Card>
-  );
-};
 
-const ReportStats = () => {
-  const statsData = [
-    {
-      title: "Last Month",
-      value: "$0",
-      description: "Previous month earnings",
-      icon: usersIcon,
-      isFirstCard: true,
-    },
-    {
-      title: "Total Earning",
-      value: "$45,670",
-      description: "Lifetime earnings",
-      icon: earningsIcon,
-      change: 12.5,
-      changeDirection: "up",
-      isFirstCard: false,
-    },
-    {
-      title: "Avg Transaction",
-      value: "$2,670",
-      description: "Per transaction",
-      icon: statsIcon,
-      change: 12.5,
-      changeDirection: "up",
-      isFirstCard: false,
-    },
-  ];
+        {/* Card glow effect on hover */}
+        <div
+          className="absolute inset-0 bg-gradient-primary-simple rounded-lg -z-10 transition-opacity duration-300"
+          style={{
+            opacity: isHovered ? 0.05 : 0,
+          }}
+        ></div>
+      </div>
+    );
+  };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       {statsData.map((stat, index) => (
-        <CustomStatCard key={index} {...stat} />
+        <StatCard key={stat.title} stat={stat} index={index} />
       ))}
     </div>
   );

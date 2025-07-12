@@ -76,7 +76,7 @@ const DiscountSettings = () => {
           {/* Discount Percentage */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-gray-400 mb-2">
                 Discount Percentage (%)
               </label>
               <div className="relative">
@@ -86,7 +86,7 @@ const DiscountSettings = () => {
                   onChange={(e) =>
                     setDiscountPercentage(Number(e.target.value))
                   }
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                   min="0"
                   max="100"
                 />
@@ -102,7 +102,7 @@ const DiscountSettings = () => {
                 <h4 className="text-white font-medium">
                   Show pricing to clients
                 </h4>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-500 text-sm">
                   Toggle pricing visibility
                 </p>
               </div>
@@ -125,28 +125,12 @@ const DiscountSettings = () => {
           </div>
 
           {/* Show Offer to Clients Toggle */}
-          <div className="flex items-center justify-between py-4 border-t border-gray-700">
-            <div>
-              <h4 className="text-white font-medium">Show Offer to Clients</h4>
-              <p className="text-gray-400 text-sm">
-                Toggle offer visibility on client side
-              </p>
-            </div>
-            <div className="ml-4">
-              <button
-                type="button"
-                onClick={() => setShowOfferToClients(!showOfferToClients)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900 ${
-                  showOfferToClients ? "bg-purple-600" : "bg-gray-600"
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    showOfferToClients ? "translate-x-6" : "translate-x-1"
-                  }`}
-                />
-              </button>
-            </div>
+
+          <div>
+            <h4 className="text-white font-medium">Show Offer to Clients</h4>
+            <p className="text-gray-500 text-sm">
+              Toggle offer visibility on client side
+            </p>
           </div>
 
           {/* Preview */}

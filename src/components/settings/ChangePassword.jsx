@@ -103,65 +103,66 @@ const ChangePassword = () => {
   return (
     <>
       <Card className="p-6">
-        <h3 className="text-xl font-semibold text-white mb-6">
+        <h3 className="text-2xl font-semibold text-white mb-6">
           Change Password
         </h3>
 
-        <div className="space-y-6 max-w-md">
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Current Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPasswords.current ? "text" : "password"}
-                name="currentPassword"
-                value={passwordData.currentPassword}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 pr-12 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter current password"
-              />
-              <button
-                type="button"
-                onClick={() => togglePasswordVisibility("current")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-              >
-                {showPasswords.current ? "👁️" : "👁️‍🗨️"}
-              </button>
+        <div className="space-y-6 ">
+          <div className="flex gap-4">
+            <div className="w-1/2">
+              <label className="block text-sm font-medium text-gray-500 mb-2">
+                Current Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPasswords.current ? "text" : "password"}
+                  name="currentPassword"
+                  value={passwordData.currentPassword}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 pr-12 bg-black border border-none rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter current password"
+                />
+                <button
+                  type="button"
+                  onClick={() => togglePasswordVisibility("current")}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                >
+                  {showPasswords.current ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
+            </div>
+            <div className="w-1/2">
+              <label className="block text-sm font-medium text-gray-500 mb-2">
+                New Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPasswords.new ? "text" : "password"}
+                  name="newPassword"
+                  value={passwordData.newPassword}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 pr-12 bg-black border border-none rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter new password"
+                />
+                <button
+                  type="button"
+                  onClick={() => togglePasswordVisibility("new")}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                >
+                  {showPasswords.new ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
+              {passwordData.newPassword &&
+                passwordData.newPassword.length < 8 && (
+                  <p className="text-red-400 text-xs mt-1">
+                    Password must be at least 8 characters long
+                  </p>
+                )}
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              New Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPasswords.new ? "text" : "password"}
-                name="newPassword"
-                value={passwordData.newPassword}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 pr-12 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter new password"
-              />
-              <button
-                type="button"
-                onClick={() => togglePasswordVisibility("new")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-              >
-                {showPasswords.new ? "👁️" : "👁️‍🗨️"}
-              </button>
-            </div>
-            {passwordData.newPassword &&
-              passwordData.newPassword.length < 8 && (
-                <p className="text-red-400 text-xs mt-1">
-                  Password must be at least 8 characters long
-                </p>
-              )}
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="w-full">
+            <label className="block text-sm font-medium text-gray-500 mb-2 w-full">
               Confirm New Password
             </label>
             <div className="relative">
@@ -170,7 +171,7 @@ const ChangePassword = () => {
                 name="confirmPassword"
                 value={passwordData.confirmPassword}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 pr-12 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 pr-12 bg-black border border-none rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Confirm new password"
               />
               <button

@@ -4,7 +4,10 @@ import bgPattern from "@/assets/images/patterns/nav-bg.png";
 
 const Sidebar = () => {
   return (
-    <aside className="w-64 h-screen fixed left-0 top-0 bg-panels-bg text-white flex flex-col z-10">
+    <aside
+      className="w-64 h-screen fixed left-0 top-0 bg-black text-white flex flex-col z-10 rounded-3xl m-2"
+      style={{ height: "calc(100vh - 16px)" }}
+    >
       <div
         className="px-8 py-8 flex items-center"
         style={{

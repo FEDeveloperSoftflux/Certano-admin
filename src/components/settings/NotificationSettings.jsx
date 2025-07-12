@@ -6,13 +6,8 @@ import Modal from "@/components/common/Modal";
 const NotificationSettings = () => {
   const [notifications, setNotifications] = useState({
     emailUpdates: true,
-    pushNotifications: false,
-    smsAlerts: true,
-    weeklyReports: true,
-    securityAlerts: true,
-    newFeatures: false,
-    promotions: false,
-    systemMaintenance: true,
+    sectionUpdates: false,
+    UserSignupAlerts: true,
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -106,64 +101,24 @@ const NotificationSettings = () => {
             id="emailUpdates"
             checked={notifications.emailUpdates}
             onChange={handleToggle}
-            label="Email Updates"
-            description="Receive important updates via email"
+            label="Email Alerts"
+            description="Receive important notifications via email"
           />
 
           <ToggleSwitch
-            id="pushNotifications"
-            checked={notifications.pushNotifications}
+            id="sectionUpdates"
+            checked={notifications.sectionUpdates}
             onChange={handleToggle}
-            label="Push Notifications"
-            description="Get instant notifications in your browser"
+            label="Section Update Notices"
+            description="Get notified when sections are updated"
           />
 
           <ToggleSwitch
-            id="smsAlerts"
-            checked={notifications.smsAlerts}
+            id="UserSignupAlerts"
+            checked={notifications.UserSignupAlerts}
             onChange={handleToggle}
-            label="SMS Alerts"
-            description="Receive critical alerts via SMS"
-          />
-
-          <ToggleSwitch
-            id="weeklyReports"
-            checked={notifications.weeklyReports}
-            onChange={handleToggle}
-            label="Weekly Reports"
-            description="Get weekly summary reports"
-          />
-
-          <ToggleSwitch
-            id="securityAlerts"
-            checked={notifications.securityAlerts}
-            onChange={handleToggle}
-            label="Security Alerts"
-            description="Important security notifications"
-          />
-
-          <ToggleSwitch
-            id="newFeatures"
-            checked={notifications.newFeatures}
-            onChange={handleToggle}
-            label="New Features"
-            description="Learn about new platform features"
-          />
-
-          <ToggleSwitch
-            id="promotions"
-            checked={notifications.promotions}
-            onChange={handleToggle}
-            label="Promotions"
-            description="Receive promotional offers and discounts"
-          />
-
-          <ToggleSwitch
-            id="systemMaintenance"
-            checked={notifications.systemMaintenance}
-            onChange={handleToggle}
-            label="System Maintenance"
-            description="Notifications about scheduled maintenance"
+            label="User Signup Notices"
+            description="Receive notifications when new users sign up"
           />
         </div>
 

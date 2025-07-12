@@ -1,7 +1,8 @@
 /* Sidebar component styles */
 
 .sidebar {
-  @apply bg-panels-bg w-64 h-screen fixed left-0 top-0 flex flex-col z-10;
+  @apply bg-black w-64 h-screen fixed left-0 top-0 flex flex-col z-10;
+  border-radius: 1rem;
 }
 
 .sidebar-header {

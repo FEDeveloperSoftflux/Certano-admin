@@ -26,12 +26,13 @@ const Settings = () => {
       label: "Subscription Plan Control",
       component: SubscriptionPlanControl,
     },
-    {
-      id: "promotional",
-      label: "Promotional Offers",
-      component: PromotionalOffers,
-    },
-    { id: "discount", label: "Discount Settings", component: DiscountSettings },
+    // Hidden tabs - content moved to SubscriptionPlanControl
+    // {
+    //   id: "promotional",
+    //   label: "Promotional Offers",
+    //   component: PromotionalOffers,
+    // },
+    // { id: "discount", label: "Discount Settings", component: DiscountSettings },
   ];
 
   const ActiveComponent = tabs.find((tab) => tab.id === activeTab)?.component;
@@ -50,7 +51,7 @@ const Settings = () => {
 
       {/* Tab Navigation */}
       <div className="mb-8">
-        <div className="bg-gray-900/50 rounded-lg p-1 flex flex-wrap gap-1">
+        <div className="bg-gray-900/50 rounded-lg p-1 flex flex-wrap">
           {tabs.map((tab) => (
             <button
               key={tab.id}

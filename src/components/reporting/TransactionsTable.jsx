@@ -108,7 +108,6 @@ const TransactionsTable = () => {
               <tr className="border-b border-[#333] bg-[#222]">
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Date</th>
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Client</th>
-                <th className="px-4 py-3 text-left text-sm text-gray-400">Plan</th>
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Description</th>
                 <th className="px-4 py-3 text-left text-sm text-gray-400">Amount</th>
               </tr>
@@ -125,9 +124,6 @@ const TransactionsTable = () => {
                         <div className="text-gray-400 text-sm">{transaction.email}</div>
                       </div>
                     </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <PlanBadge plan={transaction.plan} />
                   </td>
                   <td className="px-4 py-4 text-white">{transaction.description}</td>
                   <td className="px-4 py-4 text-white">{transaction.amount}</td>
