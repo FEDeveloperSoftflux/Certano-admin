@@ -34,22 +34,12 @@ const AddUserModal = ({ isOpen, onClose, onSubmit }) => (
       />
     </div>
 
-    <div className="grid grid-cols-2 gap-6 mb-6">
-      <div>
-        <label className="block text-white mb-2">Role</label>
-        <select className="w-full bg-[#222]/80 border border-[#333] rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#9d3fff]/50 transition-all duration-300 appearance-none">
-          <option>User</option>
-          <option>Admin</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-white mb-2">Plan Type</label>
-        <select className="w-full bg-[#222]/80 border border-[#333] rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#9d3fff]/50 transition-all duration-300 appearance-none">
-          <option>Trial</option>
-          <option>Basic</option>
-          <option>Premium</option>
-        </select>
-      </div>
+    <div className="mb-6">
+      <label className="block text-white mb-2">Role</label>
+      <select className="w-full bg-[#222]/80 border border-[#333] rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#9d3fff]/50 transition-all duration-300 appearance-none">
+        <option>User</option>
+        <option>Admin</option>
+      </select>
     </div>
 
     <div className="mb-8">

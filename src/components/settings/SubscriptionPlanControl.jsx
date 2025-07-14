@@ -231,7 +231,7 @@ const SubscriptionPlanControl = () => {
             onClick={handleSaveDiscountSettings}
             className="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
           >
-            Save Discount Settings
+            Save Settings
           </Button>
         </div>
       </Card>

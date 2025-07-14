@@ -53,29 +53,52 @@ const TransactionsTable = () => {
     setCurrentPage(page);
   };
   
-  const renderPagination = () => (
-    <div className="flex items-center justify-center space-x-2 mt-6">
-      <button 
-        onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-        disabled={currentPage === 1}
-        className="px-2 py-1 rounded bg-[#333] hover:bg-[#444] disabled:opacity-50 disabled:pointer-events-none"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-400">
-          <path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
+  const renderPagination = () => {
+    const getVisiblePages = () => {
+      const pages = [];
+      const maxVisible = 5;
       
-      {Array.from({ length: Math.min(5, totalPages) }).map((_, idx) => {
-        // Show 5 page numbers centered around current page
-        let pageNum = currentPage - 2 + idx;
-        if (pageNum <= 0) pageNum = idx + 1;
-        if (pageNum > totalPages) return null;
+      if (totalPages <= maxVisible) {
+        // Show all pages if total is less than max visible
+        for (let i = 1; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        // Calculate start and end based on current page
+        let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        let end = start + maxVisible - 1;
         
-        return (
+        // Adjust if we're near the end
+        if (end > totalPages) {
+          end = totalPages;
+          start = Math.max(1, end - maxVisible + 1);
+        }
+        
+        for (let i = start; i <= end; i++) {
+          pages.push(i);
+        }
+      }
+      
+      return pages;
+    };
+    
+    return (
+      <div className="flex items-center justify-center space-x-2 mt-6">
+        <button 
+          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+          disabled={currentPage === 1}
+          className="px-2 py-1 rounded bg-[#333] hover:bg-[#444] disabled:opacity-50 disabled:pointer-events-none"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-400">
+            <path d="M15 19l-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+        
+        {getVisiblePages().map((pageNum) => (
           <button
             key={pageNum}
             onClick={() => handlePageChange(pageNum)}
-            className={`w-6 h-6 flex items-center justify-center rounded ${
+            className={`w-8 h-8 flex items-center justify-center rounded ${
               currentPage === pageNum 
                 ? 'bg-purple-600 text-white' 
                 : 'text-gray-400 hover:bg-[#333]'
@@ -83,20 +106,20 @@ const TransactionsTable = () => {
           >
             {pageNum}
           </button>
-        );
-      })}
-      
-      <button 
-        onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-        disabled={currentPage === totalPages}
-        className="px-2 py-1 rounded bg-[#333] hover:bg-[#444] disabled:opacity-50 disabled:pointer-events-none"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-400">
-          <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  );
+        ))}
+        
+        <button 
+          onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+          disabled={currentPage === totalPages}
+          className="px-2 py-1 rounded bg-[#333] hover:bg-[#444] disabled:opacity-50 disabled:pointer-events-none"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-400">
+            <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="mb-8">
