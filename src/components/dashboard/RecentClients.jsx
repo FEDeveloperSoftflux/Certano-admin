@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Card from "../common/Card";
 import { formatDate } from "@/utils/helpers/formatters";
+import { useResponsive } from "@/hooks/useResponsive";
 import viewIcon from "@/assets/icons/view.svg";
 const mockClients = [
   {
@@ -34,9 +35,11 @@ const mockClients = [
 ];
 
 const ClientRow = ({ client }) => {
+  const { isMobile } = useResponsive();
+  
   return (
-    <div className="flex items-center justify-between py-3 px-4 hover:bg-white/5 rounded-lg transition-all">
-      <div className="flex items-center space-x-3">
+    <div className="flex items-center justify-between py-3 px-2 md:px-4 hover:bg-white/5 rounded-lg transition-all">
+      <div className="flex items-center space-x-2 md:space-x-3 flex-1 min-w-0">
         <div className="w-8 h-8 rounded-full overflow-hidden bg-cards-alt-bg flex-shrink-0">
           {client.avatar ? (
             <img
@@ -50,33 +53,34 @@ const ClientRow = ({ client }) => {
             </div>
           )}
         </div>
-        <div>
-          <h4 className="text-white font-schibsted">{client.name}</h4>
-          <p className="text-xs text-text-body">{client.email}</p>
+        <div className="min-w-0 flex-1">
+          <h4 className="text-white font-schibsted text-sm md:text-base truncate">{client.name}</h4>
+          <p className="text-xs text-text-body truncate">{isMobile ? client.email.split('@')[0] : client.email}</p>
         </div>
       </div>
-      <div className="text-xs text-text-body">
-        {formatDate(client.joinDate)}
+      <div className="text-xs text-text-body flex-shrink-0">
+        {isMobile ? formatDate(client.joinDate).split(' ')[0] : formatDate(client.joinDate)}
       </div>
     </div>
   );
 };
 
 const RecentClients = () => {
+  const { isMobile } = useResponsive();
   const [viewAll, setViewAll] = useState(false);
 
   return (
     <Card className="w-full">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-schibsted text-lg text-white">
+        <h3 className="font-schibsted text-base md:text-lg text-white">
           Recent Joined Clients
         </h3>
         <button
           onClick={() => setViewAll(!viewAll)}
-          className="flex items-center text-sm text-text-body hover:text-white transition-all"
+          className="flex items-center text-xs md:text-sm text-text-body hover:text-white transition-all"
         >
-          <img src={viewIcon} alt="View all" className="w-4 h-4 mr-1" />
-          <span>View All</span>
+          <img src={viewIcon} alt="View all" className="w-3 md:w-4 h-3 md:h-4 mr-1" />
+          <span>{isMobile ? 'View' : 'View All'}</span>
         </button>
       </div>
 

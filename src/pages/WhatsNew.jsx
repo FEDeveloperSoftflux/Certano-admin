@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Card from "@/components/common/Card";
 import Button from "@/components/common/Button";
+import { useResponsive } from "@/hooks/useResponsive";
 import AnnounceIcon from "@/assets/icons/announce.svg";
 import AddIcon from "@/assets/icons/add.svg";
 import AnnouncementCard from "@/components/whatsNew/AnnouncementCard";
@@ -8,6 +9,7 @@ import CreatePostModal from "@/components/whatsNew/CreatePostModal";
 import EditUpdateModal from "@/components/common/EditUpdateModal";
 
 const WhatsNew = () => {
+  const { isMobile } = useResponsive();
   const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingAnnouncement, setEditingAnnouncement] = useState(null);
@@ -62,30 +64,30 @@ const WhatsNew = () => {
 
   return (
     <div className="animate-fadeIn">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6 md:mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-schibsted font-bold text-white mb-1">
+          <h1 className="text-2xl md:text-3xl font-schibsted font-bold text-white mb-1">
             What's New?
           </h1>
-          <p className="text-text-body">
+          <p className="text-text-body text-sm md:text-base">
             Stay ahead of legal changes with <span className="text-orange-500">real-time compliance updates</span>
           </p>
         </div>
         <Button
           variant="primary"
-          className="px-4 py-2 bg-gradient-primary shadow-sm transform hover:scale-105 transition-all"
+          className="px-3 md:px-4 py-2 bg-gradient-primary shadow-sm transform hover:scale-105 transition-all"
           onClick={() => setIsCreatePostModalOpen(true)}
         >
           <span className="flex items-center text-black font-semibold">
-            <img src={AddIcon} alt="Add" className="w-4 h-4 mr-2" />
-            Create Post
+            <img src={AddIcon} alt="Add" className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
+            <span className="text-sm md:text-base">{isMobile ? 'Create' : 'Create Post'}</span>
           </span>
         </Button>
       </div>
       <Card className="w-full bg-[#1a1a1a] shadow-lg overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#7c11ff]/5 to-transparent rounded-full"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[#FF8067]/5 to-transparent rounded-full"></div>
-        <div className="space-y-6 relative">
+        <div className="absolute top-0 right-0 w-32 md:w-64 h-32 md:h-64 bg-gradient-to-bl from-[#7c11ff]/5 to-transparent rounded-full"></div>
+        <div className="absolute bottom-0 left-0 w-32 md:w-64 h-32 md:h-64 bg-gradient-to-tr from-[#FF8067]/5 to-transparent rounded-full"></div>
+        <div className="space-y-4 md:space-y-6 relative">
           {announcements.map((announcement) => (
             <AnnouncementCard
               key={announcement.id}

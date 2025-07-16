@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "@/components/common/Button";
+import { useResponsive } from "@/hooks/useResponsive";
 import calendarIcon from "@/assets/icons/calender.svg";
 import downloadIcon from "@/assets/icons/download.svg";
 
@@ -13,6 +14,7 @@ const clients = [
 ];
 
 const Filters = ({ onExportPDF }) => {
+  const { isMobile } = useResponsive();
   const [selectedClient, setSelectedClient] = useState(clients[0].id);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -87,63 +89,127 @@ const Filters = ({ onExportPDF }) => {
   );
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-      <div className="flex flex-wrap items-center gap-4">
-        <StyledDropdown
-          options={clients}
-          value={selectedClient}
-          onChange={handleClientChange}
-          className="w-40"
-        />
-
-        <DateInput
-          label="From Date"
-          value={fromDate}
-          onChange={handleFromDateChange}
-          className="w-42"
-        />
-
-        <DateInput
-          label="To Date"
-          value={toDate}
-          onChange={handleToDateChange}
-          className="w-42"
-        />
-      </div>
-
-      {/* Export buttons styled to match Dashboard Monthly/Yearly buttons */}
-      <div className="flex space-x-2 items-center justify-center">
-        <Button
-          variant="secondary"
-          className="px-5 py-2 flex items-center justify-center space-x-2"
-          onClick={handleExportCSV}
-        >
-          {/* Icon and text on a single line */}
-          <span className="flex items-center space-x-2">
-            <img
-              src={downloadIcon}
-              alt="Download"
-              className="w-4 h-4 filter brightness-0 invert"
+    <div className="mb-4 md:mb-6">
+      {/* Mobile Layout */}
+      {isMobile ? (
+        <div className="space-y-4">
+          {/* Filters Row */}
+          <div className="flex flex-col gap-3">
+            <StyledDropdown
+              options={clients}
+              value={selectedClient}
+              onChange={handleClientChange}
+              className="w-full"
             />
-            <span>Export CSV</span>
-          </span>
-        </Button>
-        <Button
-          variant="primary"
-          className="px-5 py-2 text-black font-semibold bg-gradient-primary flex items-center justify-center space-x-2"
-          onClick={onExportPDF}
-        >
-          {/* Icon and text on a single line */}
-          <span className="flex items-center space-x-2">
-            <img
-              src={downloadIcon}
-              alt="Download"
-              className="w-4 h-4 filter brightness-0"
+            <div className="flex gap-2">
+              <DateInput
+                label="From Date"
+                value={fromDate}
+                onChange={handleFromDateChange}
+                className="flex-1"
+              />
+              <DateInput
+                label="To Date"
+                value={toDate}
+                onChange={handleToDateChange}
+                className="flex-1"
+              />
+            </div>
+          </div>
+          
+          {/* Export Buttons Row */}
+          <div className="flex gap-2">
+            <Button
+              variant="secondary"
+              className="flex-1 px-3 py-2 flex items-center justify-center space-x-1"
+              onClick={handleExportCSV}
+            >
+              <span className="flex items-center space-x-1">
+                <img
+                  src={downloadIcon}
+                  alt="Download"
+                  className="w-3 h-3 filter brightness-0 invert"
+                />
+                <span className="text-xs">CSV</span>
+              </span>
+            </Button>
+            <Button
+              variant="primary"
+              className="flex-1 px-3 py-2 text-black font-semibold bg-gradient-primary flex items-center justify-center space-x-1"
+              onClick={onExportPDF}
+            >
+              <span className="flex items-center space-x-1">
+                <img
+                  src={downloadIcon}
+                  alt="Download"
+                  className="w-3 h-3 filter brightness-0"
+                />
+                <span className="text-xs">PDF</span>
+              </span>
+            </Button>
+          </div>
+        </div>
+      ) : (
+        /* Desktop Layout */
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <StyledDropdown
+              options={clients}
+              value={selectedClient}
+              onChange={handleClientChange}
+              className="w-40"
             />
-            <span>Export PDF</span>
-          </span>
-        </Button>
-      </div>
+
+            <DateInput
+              label="From Date"
+              value={fromDate}
+              onChange={handleFromDateChange}
+              className="w-42"
+            />
+
+            <DateInput
+              label="To Date"
+              value={toDate}
+              onChange={handleToDateChange}
+              className="w-42"
+            />
+          </div>
+
+          {/* Export buttons styled to match Dashboard Monthly/Yearly buttons */}
+          <div className="flex space-x-2 items-center justify-center">
+            <Button
+              variant="secondary"
+              className="px-5 py-2 flex items-center justify-center space-x-2"
+              onClick={handleExportCSV}
+            >
+              {/* Icon and text on a single line */}
+              <span className="flex items-center space-x-2">
+                <img
+                  src={downloadIcon}
+                  alt="Download"
+                  className="w-4 h-4 filter brightness-0 invert"
+                />
+                <span>Export CSV</span>
+              </span>
+            </Button>
+            <Button
+              variant="primary"
+              className="px-5 py-2 text-black font-semibold bg-gradient-primary flex items-center justify-center space-x-2"
+              onClick={onExportPDF}
+            >
+              {/* Icon and text on a single line */}
+              <span className="flex items-center space-x-2">
+                <img
+                  src={downloadIcon}
+                  alt="Download"
+                  className="w-4 h-4 filter brightness-0"
+                />
+                <span>Export PDF</span>
+              </span>
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

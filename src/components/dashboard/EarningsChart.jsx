@@ -1,6 +1,7 @@
 import { Line } from 'react-chartjs-2';
 import Card from '../common/Card';
 import { useState } from 'react';
+import { useResponsive } from '@/hooks/useResponsive';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,6 +29,7 @@ ChartJS.register(
 const timeRanges = ['1 Month', '3 Months', '6 Months', '1 Year'];
 
 const EarningsChart = () => {
+  const { isMobile } = useResponsive();
   const [selectedRange, setSelectedRange] = useState('1 Month');
   
   const data = {
@@ -97,23 +99,23 @@ const EarningsChart = () => {
 
   return (
     <Card className="w-full h-80">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="font-schibsted text-lg text-white">Earnings Overview</h3>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-6 gap-3">
+        <h3 className="font-schibsted text-base md:text-lg text-white">Earnings Overview</h3>
         <div className="flex bg-cards-alt-bg rounded-lg overflow-hidden">
           {timeRanges.map((range) => (
             <button
               key={range}
               onClick={() => setSelectedRange(range)}
-              className={`px-3 py-1 text-sm transition-all ${
+              className={`px-2 md:px-3 py-1 text-xs md:text-sm transition-all whitespace-nowrap ${
                 selectedRange === range ? 'bg-white/10 text-white' : 'text-text-body'
               }`}
             >
-              {range}
+              {isMobile ? range.split(' ')[0] : range}
             </button>
           ))}
         </div>
       </div>
-      <div className="h-56">
+      <div className="h-48 md:h-56">
         <Line data={data} options={options} />
       </div>
     </Card>

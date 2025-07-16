@@ -6,6 +6,7 @@ import UserTable from "@/components/userManagement/components/UserTable";
 import TableActions from "@/components/userManagement/components/TableActions";
 import Pagination from "@/components/userManagement/components/Pagination";
 import PageHeader from "@/components/userManagement/components/PageHeader";
+import { useResponsive } from "@/hooks/useResponsive";
 import {
   PasswordChangeModal,
   DeleteConfirmationModal,
@@ -22,6 +23,7 @@ import { SuccessModal } from "@/components/common/Modal";
  * @returns {JSX.Element} UserManagement page
  */
 const UserManagement = () => {
+  const { isMobile } = useResponsive();
   const {
     users,
     selectedRows,
@@ -82,29 +84,33 @@ const UserManagement = () => {
         description="Manage your team members and their account permissions here."
       />
 
-      <Card className="w-full bg-[#1a1a1a] shadow-lg">
+      <Card className="w-full bg-[#1a1a1a] shadow-lg overflow-hidden">
         {isLoading && <LoadingOverlay />}
         
-        <TableActions 
-          selectedCount={selectedRows.length}
-          isProcessing={isProcessing}
-          isLoading={isLoading}
-          onDelete={() => openModal("deleteUser")}
-          onAddUser={() => openModal("addUser")}
-        />
+        <div className="p-4 md:p-6">
+          <TableActions 
+            selectedCount={selectedRows.length}
+            isProcessing={isProcessing}
+            isLoading={isLoading}
+            onDelete={() => openModal("deleteUser")}
+            onAddUser={() => openModal("addUser")}
+          />
 
-        <UserTable 
-          isProcessing={isProcessing}
-          isLoading={isLoading}
-          openModal={openModal}
-        />
+          <div className="overflow-x-auto">
+            <UserTable 
+              isProcessing={isProcessing}
+              isLoading={isLoading}
+              openModal={openModal}
+            />
+          </div>
 
-        <Pagination 
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          isDisabled={isProcessing || isLoading}
-        />
+          <Pagination 
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            isDisabled={isProcessing || isLoading}
+          />
+        </div>
       </Card>
 
       {/* Render all modals */}

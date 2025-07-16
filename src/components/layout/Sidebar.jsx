@@ -1,20 +1,49 @@
 import { NavLink } from "react-router-dom";
 import { navItems } from "@/utils/constants/navigation";
 import bgPattern from "@/assets/images/patterns/nav-bg.png";
+import { useSidebar } from "../../contexts/SidebarContext";
 
 const Sidebar = () => {
+  const { isSidebarOpen, isMobile, handleNavClick, closeSidebar } = useSidebar();
+
   return (
     <aside
-      className="w-64 h-screen fixed left-0 top-0 bg-black text-white flex flex-col z-10 rounded-3xl m-2"
-      style={{ height: "calc(100vh - 16px)" }}
+      className={`w-64 h-screen fixed left-0 top-0 bg-black text-white flex flex-col z-50 transition-transform duration-300 ease-in-out ${
+        isMobile 
+          ? `transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} rounded-none` 
+          : 'rounded-3xl m-2'
+      }`}
+      style={{ height: isMobile ? "100vh" : "calc(100vh - 16px)" }}
     >
       <div
-        className="px-8 py-8 flex items-center"
+        className="px-8 py-8 flex items-center justify-between"
         style={{
           height: "90px",
         }}
       >
-        <h1 className="text-2xl font-schibsted  text-white">Certano AI</h1>
+        <h1 className="text-2xl font-schibsted text-white">Certano AI</h1>
+        {/* Close button for mobile */}
+        {isMobile && (
+          <button
+            onClick={closeSidebar}
+            className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+            aria-label="Close sidebar"
+          >
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 px-4 py-4">
@@ -23,6 +52,7 @@ const Sidebar = () => {
             <li key={item.id}>
               <NavLink
                 to={item.path}
+                onClick={handleNavClick}
                 className={({ isActive }) => `
                   flex items-center px-5 py-3.5 rounded-xl transition-all duration-300 relative
                   ${

@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { mockUser } from "@/utils/constants/navigation";
 import notifiIcon from "@/assets/icons/notification.svg";
+import { useSidebar } from "../../contexts/SidebarContext";
 
 const Header = () => {
   const location = useLocation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { isMobile, toggleSidebar } = useSidebar();
 
   // Format the current path for display
   const formatPathName = (pathname) => {
@@ -16,9 +18,31 @@ const Header = () => {
   const pageName = formatPathName(location.pathname);
 
   return (
-    <header className="flex justify-between items-center py-6 px-8">
+    <header className="flex justify-between items-center py-6 px-4 md:px-8">
       <div className="flex items-center">
-        <h1 className="text-2xl font-schibsted font-bold text-white">
+        {/* Hamburger menu for mobile */}
+        {isMobile && (
+          <button
+            onClick={toggleSidebar}
+            className="mr-4 p-2 rounded-lg hover:bg-white/5 transition-colors"
+            aria-label="Toggle sidebar"
+          >
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        )}
+        <h1 className="text-xl md:text-2xl font-schibsted font-bold text-white">
           {pageName}
         </h1>
       </div>
@@ -33,7 +57,7 @@ const Header = () => {
         {/* User Profile */}
         <div className="relative">
           <button
-            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-white/5 transition-all"
+            className="flex items-center space-x-2 md:space-x-3 p-2 rounded-lg hover:bg-white/5 transition-all"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
             <div className="rounded-full w-8 h-8 overflow-hidden border-2 border-[#CBA7FF]">
@@ -43,7 +67,7 @@ const Header = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="text-left">
+            <div className="text-left hidden md:block">
               <p className="text-white font-schibsted">{mockUser.name}</p>
               <p className="text-xs text-text-body">{mockUser.email}</p>
             </div>

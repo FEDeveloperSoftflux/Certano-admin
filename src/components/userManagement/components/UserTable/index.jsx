@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { StatusBadge, SupportStatusWithIcon } from '@/components/common';
+import { useResponsive } from '@/hooks/useResponsive';
 import useUserManagement from '../../hooks/useUserManagement';
 import PasswordIcon from '@/assets/icons/password.svg';
 import RevertIcon from '@/assets/icons/revert.svg';
@@ -17,6 +18,8 @@ import DeleteIcon from '@/assets/icons/delete.svg';
  * @returns {JSX.Element} UserTable component
  */
 const UserTable = ({ isProcessing, isLoading, openModal }) => {
+  const { isMobile } = useResponsive();
+  
   // Get user data and state from context
   const {
     users,
@@ -44,23 +47,19 @@ const UserTable = ({ isProcessing, isLoading, openModal }) => {
   };
 
   return (
-    <div className="overflow-x-auto rounded-xl">
-      <table className="min-w-full">
-        <TableHeader 
-          isAllSelected={isAllSelected}
-          toggleSelectAll={selectAll}
-          isProcessing={isProcessing}
-          hasUsers={Array.isArray(users) && users.length > 0}
-          selectedCount={selectedRows.length}
-        />
-        
-        <tbody>
+    <div className="rounded-xl">
+      {isMobile ? (
+        <div className="space-y-3">
           {!Array.isArray(filteredUsers) || filteredUsers.length === 0 ? (
-            <EmptyTableState isLoading={isLoading} searchTerm={searchTerm} />
+            <div className="text-center py-8 text-gray-400">
+              {isLoading ? 'Loading users...' : 
+               searchTerm ? `No users found matching "${searchTerm}"` : 
+               'No users available. Add users using the "Add User" button.'}
+            </div>
           ) : (
             filteredUsers.map((user, index) => (
-              <SafeRender key={`user-${index}`} fallback={<ErrorRow index={index} />}>
-                <TableRow 
+              <SafeRender key={`user-${index}`} fallback={<div className="text-red-400 p-4 bg-red-900/10 rounded-lg">Error loading user</div>}>
+                <MobileUserCard 
                   user={user}
                   index={index}
                   isSelected={selectedRows.includes(user.id)}
@@ -71,11 +70,120 @@ const UserTable = ({ isProcessing, isLoading, openModal }) => {
               </SafeRender>
             ))
           )}
-        </tbody>
-      </table>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
+            <TableHeader 
+              isAllSelected={isAllSelected}
+              toggleSelectAll={selectAll}
+              isProcessing={isProcessing}
+              hasUsers={Array.isArray(users) && users.length > 0}
+              selectedCount={selectedRows.length}
+            />
+            
+            <tbody>
+              {!Array.isArray(filteredUsers) || filteredUsers.length === 0 ? (
+                <EmptyTableState isLoading={isLoading} searchTerm={searchTerm} />
+              ) : (
+                filteredUsers.map((user, index) => (
+                  <SafeRender key={`user-${index}`} fallback={<ErrorRow index={index} />}>
+                    <TableRow 
+                      user={user}
+                      index={index}
+                      isSelected={selectedRows.includes(user.id)}
+                      toggleSelection={() => toggleRowSelection(index)}
+                      isProcessing={isProcessing}
+                      openModal={openModal}
+                    />
+                  </SafeRender>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
+
+/**
+ * Mobile user card component for displaying user data on mobile devices
+ */
+const MobileUserCard = ({ user, index, isSelected, toggleSelection, isProcessing, openModal }) => (
+  <div className={`p-4 rounded-lg border transition-all ${
+    isSelected ? 'bg-[#191919]/70 border-[#9d3fff]' : 'bg-[#222] border-[#333] hover:bg-[#191919]'
+  }`}>
+    <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center space-x-3">
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={toggleSelection}
+          className="w-4 h-4 accent-[#9d3fff] bg-[#222] border border-[#444] rounded cursor-pointer"
+          disabled={isProcessing}
+        />
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#9d3fff] to-[#ffd93f] flex items-center justify-center text-white text-sm font-bold shadow-md">
+          {user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : 'U'}
+        </div>
+        <div>
+          <div className="text-white font-medium">{user.name}</div>
+          <div className="text-gray-400 text-sm">{user.email}</div>
+        </div>
+      </div>
+      <div className="text-xs text-gray-400">#{user.id}</div>
+    </div>
+    
+    <div className="grid grid-cols-2 gap-3 mb-3">
+      <div>
+        <div className="text-xs text-gray-400 mb-1">Plan</div>
+        <StatusBadge type="plan" value={user.plan} />
+      </div>
+      <div>
+        <div className="text-xs text-gray-400 mb-1">Status</div>
+        <StatusBadge type="status" value={user.status} />
+      </div>
+      <div>
+        <div className="text-xs text-gray-400 mb-1">Days</div>
+        <div className="text-white text-sm">{user.days}</div>
+      </div>
+      <div>
+        <div className="text-xs text-gray-400 mb-1">Support</div>
+        <SupportStatusWithIcon status={user.supportStatus} />
+      </div>
+    </div>
+    
+    <div className="flex justify-between items-center pt-3 border-t border-[#333]">
+      <span className="text-xs text-gray-400">Actions</span>
+      <div className="flex space-x-2">
+        <ActionButton
+          icon={PasswordIcon}
+          title="Change Password"
+          onClick={() => openModal("passwordChange", user)}
+          disabled={isProcessing}
+        />
+        <ActionButton
+          icon={RevertIcon}
+          title="Reset Password"
+          onClick={() => openModal("passwordReset", user)}
+          disabled={isProcessing}
+        />
+        <ActionButton
+          icon={BlockIcon}
+          title="Block User"
+          onClick={() => openModal("blockUser", user)}
+          disabled={isProcessing}
+        />
+        <ActionButton
+          icon={DeleteIcon}
+          title="Delete User"
+          onClick={() => openModal("deleteUser", user)}
+          disabled={isProcessing}
+        />
+      </div>
+    </div>
+  </div>
+);
 
 /**
  * Table header component with column titles and select all checkbox

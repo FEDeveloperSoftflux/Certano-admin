@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Card from '@/components/common/Card';
+import { useResponsive } from '@/hooks/useResponsive';
 
 // Plan badge component
 const PlanBadge = ({ plan }) => {
@@ -20,7 +21,7 @@ const PlanBadge = ({ plan }) => {
   }
   
   return (
-    <span className={`px-3 py-1 rounded-full text-xs font-medium ${colorClasses}`}>
+    <span className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium ${colorClasses}`}>
       {plan}
     </span>
   );
@@ -30,6 +31,39 @@ const PlanBadge = ({ plan }) => {
 const ClientAvatar = ({ initials }) => (
   <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white font-medium mr-3">
     {initials}
+  </div>
+);
+
+// Mobile transaction card component
+const MobileTransactionCard = ({ transaction }) => (
+  <div className="p-4 border border-[#333] rounded-lg bg-[#1a1a1a] hover:bg-[#191919] transition-colors">
+    <div className="flex justify-between items-start mb-3">
+      <div className="flex items-center">
+        <ClientAvatar initials={transaction.initials} />
+        <div>
+          <h4 className="text-white font-medium text-sm">{transaction.client}</h4>
+          <p className="text-xs text-gray-400">{transaction.email}</p>
+        </div>
+      </div>
+      <span className="text-white font-medium text-sm">{transaction.amount}</span>
+    </div>
+    
+    <div className="space-y-2">
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-gray-400">Date:</span>
+        <span className="text-xs text-white">{transaction.date}</span>
+      </div>
+      
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-gray-400">Plan:</span>
+        <PlanBadge plan={transaction.plan} />
+      </div>
+      
+      <div className="flex justify-between items-start">
+        <span className="text-xs text-gray-400">Description:</span>
+        <span className="text-xs text-white text-right flex-1 ml-2">{transaction.description}</span>
+      </div>
+    </div>
   </div>
 );
 
@@ -45,6 +79,7 @@ const transactionData = [
 ];
 
 const TransactionsTable = () => {
+  const { isMobile } = useResponsive();
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 10; // Arbitrary number for demo
   
@@ -122,41 +157,50 @@ const TransactionsTable = () => {
   };
 
   return (
-    <div className="mb-8">
-      <h3 className="font-schibsted text-2xl text-white mb-4">Recent Transactions</h3>
-      <Card className="w-full overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full">
-            <thead>
-              <tr className="border-b border-[#333] bg-[#222]">
-                <th className="px-4 py-3 text-left text-sm text-gray-400">Date</th>
-                <th className="px-4 py-3 text-left text-sm text-gray-400">Client</th>
-                <th className="px-4 py-3 text-left text-sm text-gray-400">Description</th>
-                <th className="px-4 py-3 text-left text-sm text-gray-400">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactionData.map((transaction, index) => (
-                <tr key={index} className="border-b border-[#333] hover:bg-[#191919] transition-colors">
-                  <td className="px-4 py-4 text-white">{transaction.date}</td>
-                  <td className="px-4 py-4">
-                    <div className="flex items-center">
-                      <ClientAvatar initials={transaction.initials} />
-                      <div>
-                        <div className="text-white">{transaction.client}</div>
-                        <div className="text-gray-400 text-sm">{transaction.email}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 text-white">{transaction.description}</td>
-                  <td className="px-4 py-4 text-white">{transaction.amount}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="mb-6 md:mb-8">
+      <h3 className="font-schibsted text-lg md:text-2xl text-white mb-3 md:mb-4">Recent Transactions</h3>
+      {isMobile ? (
+        <div className="space-y-3">
+          {transactionData.map((transaction, index) => (
+            <MobileTransactionCard key={index} transaction={transaction} />
+          ))}
+          {renderPagination()}
         </div>
-        {renderPagination()}
-      </Card>
+      ) : (
+        <Card className="w-full overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full">
+              <thead>
+                <tr className="border-b border-[#333] bg-[#222]">
+                  <th className="px-4 py-3 text-left text-sm text-gray-400">Date</th>
+                  <th className="px-4 py-3 text-left text-sm text-gray-400">Client</th>
+                  <th className="px-4 py-3 text-left text-sm text-gray-400">Description</th>
+                  <th className="px-4 py-3 text-left text-sm text-gray-400">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactionData.map((transaction, index) => (
+                  <tr key={index} className="border-b border-[#333] hover:bg-[#191919] transition-colors">
+                    <td className="px-4 py-4 text-white">{transaction.date}</td>
+                    <td className="px-4 py-4">
+                      <div className="flex items-center">
+                        <ClientAvatar initials={transaction.initials} />
+                        <div>
+                          <div className="text-white">{transaction.client}</div>
+                          <div className="text-gray-400 text-sm">{transaction.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 text-white">{transaction.description}</td>
+                    <td className="px-4 py-4 text-white">{transaction.amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {renderPagination()}
+        </Card>
+      )}
     </div>
   );
 };
