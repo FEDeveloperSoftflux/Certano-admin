@@ -86,26 +86,21 @@ const Sidebar = () => {
         </ul>
       </nav>
 
-      <div
-        className="p-6 mx-4 mb-6 rounded-xl relative overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(93.17deg, #9148d9 1.94%, #ff8067 106.84%)",
-          backgroundImage: `url(${bgPattern})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundBlendMode: "overlay",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-transparent"></div>
-        <div className="relative z-10 text-white">
-          <h3 className="font-schibsted font-semibold mb-2">Need Help?</h3>
-          <p className="text-sm text-white/80 mb-4">
-            Contact our support team for assistance
-          </p>
-          <button className="bg-white/15 hover:bg-white/25 text-white w-full py-2.5 text-sm rounded-lg transition-all duration-300 backdrop-blur-sm">
-            Contact Support
-          </button>
+      {/* Bottom gradient decoration with bgPattern */}
+      <div className="mt-auto">
+        <div 
+          className="h-24 mx-4 mb-4 rounded-xl relative overflow-hidden opacity-60"
+          style={{
+            background:
+              "linear-gradient(135deg, #9148d9 0%, #ff8067 70%, #9148d9 100%)",
+            backgroundImage: `url(${bgPattern})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            backgroundBlendMode: "soft-light",
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-orange-500/10"></div>
         </div>
       </div>
     </aside>
