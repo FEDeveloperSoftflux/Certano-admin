@@ -4,29 +4,41 @@ import bgPattern from "@/assets/images/patterns/nav-bg.png";
 import { useSidebar } from "../../contexts/SidebarContext";
 
 const Sidebar = () => {
-  const { isSidebarOpen, isMobile, handleNavClick, closeSidebar } = useSidebar();
+  const { isSidebarOpen, isMobile, handleNavClick, closeSidebar } =
+    useSidebar();
 
   return (
     <aside
-      className={`w-64 h-screen fixed left-0 top-0 bg-black text-white flex flex-col z-50 transition-transform duration-300 ease-in-out ${
-        isMobile 
-          ? `transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} rounded-none` 
-          : 'rounded-3xl m-2'
+      className={`w-64 h-screen fixed left-0 top-0 bg-black text-white flex flex-col transition-transform duration-300 ease-in-out ${
+        isMobile
+          ? `z-50 transform ${
+              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            } rounded-none`
+          : "z-10 rounded-3xl m-2"
       }`}
       style={{ height: isMobile ? "100vh" : "calc(100vh - 16px)" }}
     >
       <div
-        className="px-8 py-8 flex items-center justify-between"
+        className={`flex items-center justify-between ${
+          isMobile ? "px-6 py-6" : "px-8 py-8"
+        }`}
         style={{
           height: "90px",
         }}
       >
-        <h1 className="text-2xl font-schibsted text-white">Certano AI</h1>
+        <h1
+          className={`font-schibsted text-white ${
+            isMobile ? "text-xl" : "text-2xl"
+          }`}
+        >
+          Certano AI
+        </h1>
+
         {/* Close button for mobile */}
         {isMobile && (
           <button
             onClick={closeSidebar}
-            className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="p-2 rounded-lg hover:bg-white/10 transition-colors active:scale-95"
             aria-label="Close sidebar"
           >
             <svg
@@ -46,7 +58,7 @@ const Sidebar = () => {
         )}
       </div>
 
-      <nav className="flex-1 px-4 py-4">
+      <nav className="flex-1 px-4 py-4 overflow-y-auto">
         <ul className="space-y-1.5">
           {navItems.map((item) => (
             <li key={item.id}>
@@ -58,7 +70,7 @@ const Sidebar = () => {
                   ${
                     isActive
                       ? "bg-gradient-primary before:absolute before:inset-0 before:bg-black/15 before:rounded-xl font-medium shadow-[0_4px_20px_rgba(145,72,217,0.3)]"
-                      : "text-gray-400/70 hover:text-gray-400/90 hover:bg-white/5"
+                      : "text-gray-400/70 hover:text-gray-400/90 hover:bg-white/5 active:bg-white/10"
                   }
                 `}
               >
@@ -88,20 +100,19 @@ const Sidebar = () => {
 
       {/* Bottom gradient decoration with bgPattern */}
       <div className="mt-auto">
-        <div 
-          className="h-24 mx-4 mb-4 rounded-xl relative overflow-hidden opacity-60"
+        <div
+          className={`h-72 rounded-b-3xl relative overflow-hidden ${
+            isMobile ? "mx-2 mb-2" : "mx-4 mb-4"
+          }`}
           style={{
             background:
-              "linear-gradient(135deg, #9148d9 0%, #ff8067 70%, #9148d9 100%)",
+              "linear-gradient(to bottom, transparent 0%, rgba(145, 72, 217, 0.3) 40%, rgba(145, 72, 217, 0.8) 70%, #9148d9 100%)",
             backgroundImage: `url(${bgPattern})`,
             backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            backgroundBlendMode: "soft-light",
+            backgroundPosition: "center",
+            backgroundBlendMode: "overlay",
           }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-orange-500/10"></div>
-        </div>
+        ></div>
       </div>
     </aside>
   );
